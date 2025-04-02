@@ -25,8 +25,9 @@ class WinchModel():
         self.maxHeight: float = HEIGHT_MAX
         self.heightM: float = 0
         self.direction: Direction = Direction.stop
-        self.speed: float = 1
-    
+        self.speed: int = 1000
+        self.needUpdate: bool = False
+
     def scaleHeight(self) -> None:
         self.heightM = round(self.height * self.scaleFactor, 2)
 
@@ -43,13 +44,29 @@ class WinchModel():
         self.scaleHeight()
     
     def turnUp(self) -> None:
+        if self.direction == Direction.up:
+            return
         self.direction = Direction.up
+        self.needUpdate = True
 
     def turnDown(self) -> None:
+        if self.direction == Direction.down:
+            return
         self.direction = Direction.down
+        
+        self.needUpdate = True
 
     def stop(self) -> None:
+        if self.direction == Direction.stop:
+            return
         self.direction = Direction.stop
+        self.needUpdate = True
+
+    def setSpeed(self, speed) -> None:
+        if self.speed == speed:
+            return
+        self.speed = speed
+        self.needUpdate = True
 
 class RotationSensorModel():
     def __init__(self) -> None:

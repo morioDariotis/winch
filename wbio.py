@@ -12,7 +12,8 @@ DI_STATE_ADDRESS = 1250
 class WBIOHandler():
     def __init__(self, models: Models):
         self.models = models
-        
+        self.encCWhalf = False
+        self.encCCWhalf = False
 
     def open(self, port):
         thread = Thread(target = self.openThread, args = (port, ))
@@ -51,6 +52,19 @@ class WBIOHandler():
             if registers[i] % 2 == 0 and registers[i] - self.registersOld[i] >= 2:
                 button.push()
                 registers[i] -= 1
+        enc0 = registers[6] - self.registersOld[6]
+        enc1 = registers[7] - self.registersOld[7]
+        if enc0 > 0 and enc1 == 0 and self.encCCWhalf == False:
+            self.encCWhalf = True
+        if enc1 > 0 and enc0 == 0 and self.encCWhalf == False:
+            self.encCCWhalf = True
+        if self.encCCWhalf == True and enc0 == 0 and enc1 == 0:
+            self.models.winchModel.incHeight()
+            self.encCCWhalf = False
+        if self.encCWhalf == True and enc0 == 0 and enc1 == 0:
+            self.models.winchModel.decHeight()
+            self.encCWhalf = False
+        
         self.registersOld = registers
 
     def read(self):
@@ -69,5 +83,5 @@ class WBIOHandler():
         self.startReading()
 
     def startReading(self):
-        Timer(1, self.read).start()
+        Timer(0.05, self.read).start()
         

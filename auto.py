@@ -46,7 +46,7 @@ class AutoControl:
         self.models = models
         
 
-    def checkNextState(self):
+    def update(self):
         cur = self.models.autoTrees.currentTree
         tree = self.trees[cur].tree
         if not tree[cur].check():
