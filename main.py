@@ -2,13 +2,13 @@ import asyncio
 from visualisation import MainWindow
 from manual import ManualControl
 from simulation import WinchSimulator
-from wbio import WBIOHandler
+#from wbio import WBIOHandler
 from auto import Point, AutoStateTarget, AutoTree
 from models import Models, Direction
 from fm import FMHandler
 from auto import AutoControl
 import time
-
+from rasp_gpio import GPIO_Handler
 
 if __name__ == "__main__":
     models = Models()
@@ -27,10 +27,10 @@ if __name__ == "__main__":
 
     window = MainWindow(models)
     window.update()
-    wbioh = WBIOHandler(models)
-    wbioh.open('COM3')
-    wbioh.startReading()
-
+    #wbioh = WBIOHandler(models)
+   # wbioh.open('COM3')
+    #wbioh.startReading()
+    gpio = GPIO_Handler(models)
     fmh = FMHandler(models, 5)
     fmh.open("COM7")
     time.sleep(2)
