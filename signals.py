@@ -4,14 +4,29 @@ from models import Models
 
 ENCODER_DELAY = 0.05
 
-class Encoder():
+class SignalHandler():
     def __init__(self, models: Models, pi):
         self.models = models
         self.enc0 = False
         self.enc1 = False
         self.delay = False
         pi.callback(5, pigpio.FALLING_EDGE, self.enc0cb)
-        pi.callback(6, pigpio.FALLING_EDGE, self.enc0cb)
+        pi.callback(6, pigpio.FALLING_EDGE, self.enc1cb)
+        pi.callback(16, pigpio.EITHER_EDGE, self.buttonAuto)
+        pi.callback(20, pigpio.EITHER_EDGE, self.buttonManual)
+        pi.callback(21, pigpio.EITHER_EDGE, self.buttonPush)
+
+    def buttonAuto(self):
+        state = self.models.userInputModel.buttonAuto.state
+        self.models.userInputModel.buttonAuto.state = not state
+
+    def buttonManual(self):
+        state = self.models.userInputModel.buttonManual.state
+        self.models.userInputModel.buttonManual.state = not state
+
+    def buttonPush(self):
+        state = self.models.userInputModel.buttonPush.state
+        self.models.userInputModel.buttonPush.state = not state    
 
     def delayOff(self):
         self.delay = False

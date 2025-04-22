@@ -4,6 +4,7 @@ from logger import Logger, LogLevel
 class ManualControl:
     def __init__(self, models: Models) -> None:
         self.models = models
+        
 
     def manual(self) -> None:
         if (self.models.userInputModel.buttonUp.getState()):
@@ -15,7 +16,7 @@ class ManualControl:
         
 
     def auto(self) -> None:
-        self.models.winchModel.stop()
+        pass
 
     def push(self) -> None:
         if (self.models.userInputModel.buttonUp.getState()):
@@ -37,6 +38,9 @@ class ManualControl:
         if (self.models.userInputModel.buttonAuto.getState()):
             if (self.models.systemState.modeState != Mode.auto):
                 self.models.systemState.modeState = Mode.auto
+                cur = self.models.autoTrees.currentTree
+                tree = self.models.autoTrees.trees[cur].tree
+                tree[cur].start()
                 Logger.log("Switched to auto mode", LogLevel.Info)
 
     def update(self) -> None:

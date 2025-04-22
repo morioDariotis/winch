@@ -139,7 +139,7 @@ class SystemState():
         self.errorState = 0
         self.winchState = 0
         self.autoState = 0
-        self.modeState = Mode.auto
+        self.modeState = Mode.push
 
 class Settings():
     def __init__(self) -> None:

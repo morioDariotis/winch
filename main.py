@@ -3,11 +3,11 @@ from visualisation import MainWindow
 from manual import ManualControl
 from simulation import WinchSimulator
 from auto import Point, AutoStateTarget, AutoTree
-from models import Models, Direction
+from models import Models, Direction, Mode
 from fm import FMHandler
 from auto import AutoControl
 import time
-from signals import Encoder
+from signals import SignalHandler
 import pigpio
 
 if __name__ == "__main__":
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     window = MainWindow(models)
     window.update()
     pi = pigpio.pi()
-    enc = Encoder(models, pi)
+    enc = SignalHandler(models, pi)
     fmh = FMHandler(models, 5)
     fmh.open("COM7")
     time.sleep(2)
@@ -35,5 +35,6 @@ if __name__ == "__main__":
     while(1):
         manualControl.update()
         fmh.update()
-        autoControl.update()
+        if models.systemState.modeState == Mode.auto:
+            autoControl.update()
         window.update()
