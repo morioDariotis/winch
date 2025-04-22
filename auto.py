@@ -58,10 +58,11 @@ class AutoControl:
         
 
     def update(self):
-        cur = self.models.autoTrees.currentTree
-        tree = self.trees[cur].tree
-        if not tree[cur].check():
+        curTree = self.models.autoTrees.currentTree
+        tree = self.trees[curTree].tree
+        if not tree[self.models.autoTrees.currentState].check():
             return
         self.models.autoTrees.currentState += 1
-        self.models.autoTrees.currentState %= len(self.tree)
-        tree[cur].start()
+        self.models.autoTrees.currentState %= len(tree)
+        tree[self.models.autoTrees.currentState].start()
+        print(self.models.autoTrees.currentState.name)

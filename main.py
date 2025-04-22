@@ -12,9 +12,9 @@ import pigpio
 
 if __name__ == "__main__":
     models = Models()
-    p0 = Point("WTP", 20)
+    p0 = Point("WTP", 5)
     p1 = Point("TP", 0)
-    p2 = Point("DP", 60)
+    p2 = Point("DP", 8)
     a0 = AutoStateTarget(models, "Движение к точке ожидания", 0, 1000, p0)
     a1 = AutoStateTarget(models, "Движение к верхней точке", 1, 800, p1)
     a2 = AutoStateTarget(models, "Движение к нижней точке", 2, 1200, p2)

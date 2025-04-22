@@ -13,8 +13,8 @@ class SignalHandler():
         pi.callback(5, pigpio.FALLING_EDGE, self.enc0cb)
         pi.callback(6, pigpio.FALLING_EDGE, self.enc1cb)
         pi.callback(16, pigpio.EITHER_EDGE, self.buttonAuto)
-        pi.callback(20, pigpio.EITHER_EDGE, self.buttonManual)
-        pi.callback(21, pigpio.EITHER_EDGE, self.buttonPush)
+        pi.callback(26, pigpio.EITHER_EDGE, self.buttonManual)
+        pi.callback(17, pigpio.EITHER_EDGE, self.buttonPush)
 
     def buttonAuto(self):
         state = self.models.userInputModel.buttonAuto.state
