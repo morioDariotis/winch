@@ -11,9 +11,20 @@ class Point:
 
 
 class AutoStateTarget(AutoState):
-    def __init__(self, models, name, id, speed, target: Point) -> None:
+    def __init__(self, models: Models, name, id, speed, target: Point) -> None:
         super().__init__(models, name, id, speed)
         self.target: Point = target
+
+    def defineDirection(self):
+        if self.target.height > self.models.winchModel.height:
+            self.models.winchModel.turnDown()
+        else:
+            self.models.winchModel.turnUp()
+
+    def start(self) -> None:
+        super().start()
+        self.defineDirection()
+        
 
     def check(self) -> bool: 
         return self.target.height == self.models.winchModel.height
