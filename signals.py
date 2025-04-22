@@ -16,7 +16,7 @@ class Encoder():
     def delayOff(self):
         self.delay = False
 
-    def enc0cb(self):
+    def enc0cb(self, gpio, level, tick):
         if self.delay:
             return
         if self.enc1:
@@ -27,7 +27,7 @@ class Encoder():
         else:
             self.enc0 = True
 
-    def enc1cb(self):
+    def enc1cb(self, gpio, level, tick):
         if self.delay:
             return
         if self.enc0:
